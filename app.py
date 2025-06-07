@@ -147,7 +147,7 @@ elif section == "🧮 SQL Playground":
     df = pd.read_csv("AmesHousing_Cleaned.csv")
     st.write("### Raw Data", df.head())
 
-    default_query = "SELECT * FROM df LIMIT = 5;"  # Your table name
+    default_query = "SELECT * FROM df LIMIT 5;"  # Your table name
     user_query = st.text_area("Write your SQL query below:", default_query, height=150)
 
     if st.button("▶️ Run Query"):
