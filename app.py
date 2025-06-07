@@ -5,9 +5,11 @@ import plotly.express as px
 from sqlalchemy import create_engine
 import psycopg2
 from pandasql import sqldf
+import cloudpickle
 
 # Load model
-model = joblib.load("Best_model_gb.pkl")
+with open("Best_model_gb.pkl", "rb") as f:
+    model = cloudpickle.load(f)
 
 # Page config
 st.set_page_config(
