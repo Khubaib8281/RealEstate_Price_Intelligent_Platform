@@ -1,14 +1,14 @@
+streamlit
 numpy
 pandas
+scikit-learn
 matplotlib
 seaborn
 scipy
-scikit-learn
 joblib
 xgboost
 missingno
 sqlalchemy
-streamlit
 utils
 plotly
 psycopg2-binary
