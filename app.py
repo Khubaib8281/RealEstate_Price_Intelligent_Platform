@@ -13,20 +13,11 @@ import plotly.express as px
 
 import missingno as msno
 
-from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, root_mean_squared_error
-
 from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import FunctionTransformer
-
+from sklearn.preprocessing import FunctionTransformer, StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 import xgboost as xg
 
 
