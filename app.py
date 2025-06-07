@@ -4,6 +4,7 @@ import joblib
 import plotly.express as px
 from sqlalchemy import create_engine
 import psycopg2
+from pandasql import sqldf
 
 # Load model
 model = joblib.load("Best_model_gb.pkl")
@@ -15,29 +16,27 @@ st.set_page_config(
     layout="wide",
 )
 
-conn = psycopg2.connect(
-    host=st.secrets["connections.postgresql"]["host"],
-    database=st.secrets["connections.postgresql"]["database"],
-    user=st.secrets["connections.postgresql"]["user"],
-    password=st.secrets["connections.postgresql"]["password"],
-    port=st.secrets["connections.postgresql"]["port"]
-)
+# For database
+
+# DB_USER = 'postgres'
+# DB_PASS = 'password'
+# DB_HOST = 'host'
+# DB_PORT = 5432
+# DB_NAME = 'db_name'
 
 
 
-st.write("Loaded secrets:", st.secrets)
-
-
-# Connect to database
+# # Connect to database
 # engine = create_engine(f'postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
 
-# Read from the cleaned data table
-@st.cache_data(ttl=300)
-def load_data():
-    query = "SELECT * FROM house_data"  # Replace with actual table name
-    return pd.read_sql(query, conn)
 
-# section
+# Read from the cleaned data table
+# @st.cache_data(ttl=300)
+# def load_data():
+#     query = "SELECT * FROM house_data"  # Replace with actual table name
+#     return pd.read_sql(query, engine)
+
+
 
 section = st.sidebar.radio("Navigate", ["🏠 Price Prediction", "📊 Dashboard", "🧮 SQL Playground"])
 
@@ -109,12 +108,14 @@ if section == "🏠 Price Prediction":
             )
 
 elif section == "📊 Dashboard":
-    df_db = load_data()
+    # df_db = load_data()
+    df = pd.read_csv("AmesHousing_Cleaned.csv")
+    # st.write("### Raw Data", df.head())
 
     with st.sidebar:
         st.markdown("## 🧰 Dashboard Filters")
         qual_filter = st.slider("Filter by Overall Quality", 1, 10, (1, 10))
-        filtered_df = df_db[(df_db['Overall Qual'] >= qual_filter[0]) & (df_db['Overall Qual'] <= qual_filter[1])]
+        filtered_df = df[(df['Overall Qual'] >= qual_filter[0]) & (df['Overall Qual'] <= qual_filter[1])]
 
     st.markdown("---")
     st.markdown("## 📊 Real Estate Data Dashboard (Live from PostgreSQL)")
@@ -122,9 +123,9 @@ elif section == "📊 Dashboard":
     ## Summary stats
     st.markdown("### 🔢 Summary Statistics")
     col1, col2, col3 = st.columns(3)
-    col1.metric("Average Price: ", f"${df_db["SalePrice"].mean():.0f}")
-    col2.metric("Avg. Garage Area: ", f"{df_db['Garage Area'].mean():.0f}sq ft")
-    col3.metric("Avg. Overall Quality: ", f"{df_db['Overall Qual'].mean():.1f}/10")
+    col1.metric("Average Price: ", f"${df["SalePrice"].mean():.0f}")
+    col2.metric("Avg. Garage Area: ", f"{df['Garage Area'].mean():.0f}sq ft")
+    col3.metric("Avg. Overall Quality: ", f"{df['Overall Qual'].mean():.1f}/10")
 
 
     # Price Distribution
@@ -138,10 +139,10 @@ elif section == "📊 Dashboard":
     fig2 = px.scatter(filtered_df, x="Gr Liv Area", y="SalePrice", color="Overall Qual", 
                     size="Garage Cars", hover_data=["Year Built"], title="Living Area vs. Price")
     st.plotly_chart(fig2, use_container_width=True)
-
+      
     ## Yearly trend
     st.markdown("### 📅 Sale Price Trend by Year")
-    if "Yr Sold" in df_db.columns:
+    if "Yr Sold" in df.columns:
         fig3 = px.box(filtered_df, x="Yr Sold", y="SalePrice", title="Price Trends Over the Years", color="Yr Sold")
         st.plotly_chart(fig3, use_container_width=True)
 
@@ -149,13 +150,15 @@ elif section == "📊 Dashboard":
 elif section == "🧮 SQL Playground":
     st.markdown("## 🧮 SQL Playground")
     st.info("Write SQL queries to explore your PostgreSQL data.")
+    df = pd.read_csv("AmesHousing_Cleaned.csv")
+    st.write("### Raw Data", df.head())
 
-    default_query = "SELECT * FROM house_data LIMIT 5;"  # Your table name
+    default_query = "SELECT * FROM df LIMIT 5;"  # Your table name
     user_query = st.text_area("Write your SQL query below:", default_query, height=150)
 
     if st.button("▶️ Run Query"):
         try:
-            query_df = pd.read_sql(user_query, conn)
+            query_df = sqldf(user_query, locals())
             st.success("✅ Query executed successfully!")
             st.dataframe(query_df)
 
