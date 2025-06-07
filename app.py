@@ -33,27 +33,6 @@ st.set_page_config(
     layout="wide",
 )
 
-# For database
-
-# DB_USER = 'postgres'
-# DB_PASS = 'password'
-# DB_HOST = 'host'
-# DB_PORT = 5432
-# DB_NAME = 'db_name'
-
-
-
-# # Connect to database
-# engine = create_engine(f'postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
-
-
-# Read from the cleaned data table
-# @st.cache_data(ttl=300)
-# def load_data():
-#     query = "SELECT * FROM house_data"  # Replace with actual table name
-#     return pd.read_sql(query, engine)
-
-
 
 section = st.sidebar.radio("Navigate", ["🏠 Price Prediction", "📊 Dashboard", "🧮 SQL Playground"])
 
