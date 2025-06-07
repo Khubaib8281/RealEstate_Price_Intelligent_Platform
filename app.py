@@ -147,7 +147,7 @@ elif section == "🧮 SQL Playground":
     df = pd.read_csv("AmesHousing_Cleaned.csv")
     st.write("### Raw Data", df.head())
 
-    default_query = "SELECT "Yr Sold", ROUND(AVG("SalePrice"), 2) AS avg_price
+    default_query = "SELECT "Yr Sold", ROUND(AVG('SalePrice'), 2) AS avg_price
     FROM df
     GROUP BY "Yr Sold"
     ORDER BY "Yr Sold" DESC;"  # Your table name
