@@ -8,8 +8,7 @@ from pandasql import sqldf
 import cloudpickle
 
 # Load model
-with open("Best_model_gb.pkl", "rb") as f:
-    model = cloudpickle.load(f)
+model = joblib.load("Best_model_gb.pkl")
 
 # Page config
 st.set_page_config(
