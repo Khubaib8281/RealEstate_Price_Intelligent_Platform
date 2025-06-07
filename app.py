@@ -6,14 +6,12 @@ from sqlalchemy import create_engine
 import psycopg2
 from pandasql import sqldf              
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
 import plotly.express as px
 
 import missingno as msno
-import joblib
 
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
