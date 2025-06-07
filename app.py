@@ -4,8 +4,7 @@ import joblib
 import plotly.express as px
 from sqlalchemy import create_engine
 import psycopg2
-from pandasql import sqldf
-import cloudpickle
+from pandasql import sqldf              
 
 # Load model
 model = joblib.load("Best_model_gb.pkl")
