@@ -148,7 +148,7 @@ elif section == "🧮 SQL Playground":
     st.write("### Raw Data", df.head())
 
     default_query = "SELECT "Yr Sold", ROUND(AVG("SalePrice"), 2) AS avg_price
-    FROM house_data
+    FROM df
     GROUP BY "Yr Sold"
     ORDER BY "Yr Sold" DESC;"  # Your table name
     user_query = st.text_area("Write your SQL query below:", default_query, height=150)
