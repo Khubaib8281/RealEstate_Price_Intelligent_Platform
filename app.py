@@ -5,6 +5,34 @@ import plotly.express as px
 from sqlalchemy import create_engine
 import psycopg2
 from pandasql import sqldf              
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+import plotly.express as px
+
+import missingno as msno
+import joblib
+
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, root_mean_squared_error
+
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import FunctionTransformer
+
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
+import xgboost as xg
+
+
+
 
 # Load model
 model = joblib.load("Best_model_gb.pkl")
